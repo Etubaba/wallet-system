@@ -7,9 +7,12 @@
     "moduleResolution": "node",
     "outDir": "./dist",
     "esModuleInterop": true,
+    "experimentalDecorators":true,
+  
     "forceConsistentCasingInFileNames": true,
     /* Type Checking */
     "strict": true,
     "skipLibCheck": true
   }
 }
+
