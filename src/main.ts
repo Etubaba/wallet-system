@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
-import signupRoutes from "./routes/signupRoute";
+import signupRoute from "./routes/signupRoute";
+import authRoute from "./routes/authRoute";
 import cors from "cors";
 
 const app: Application = express();
@@ -14,7 +15,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Lendsqr Assessment for backend");
 });
 
-app.use("/", signupRoutes);
+app.use("/", signupRoute);
+app.use("/", authRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
