@@ -3,6 +3,7 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+
 module.exports = {
   production: {
     client: "mysql2",
@@ -17,9 +18,9 @@ module.exports = {
     //   min: 2,
     //   max: 10,
     // },
-    // migrations: {
-    //   tableName: 'knex_migrations',
-    // },
+    migrations: {
+      tableName: "knex_migrations",
+    },
   },
 
   development: {

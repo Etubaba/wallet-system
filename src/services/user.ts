@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
-import knex from "knex";
+// import knex from "../db/knex";
 import { CreateUserDto } from "../dto/userDto";
 import { HttpException } from "../exceptions/HttpException";
 
+const knex = require("../db/knex");
+
 import * as argon2 from "argon2";
 
-export const signUp = async (userDTO: CreateUserDto, res: Response) => {
+export const signUp = async (req: Request, res: Response) => {
   try {
-    const { password, full_name, email }: CreateUserDto = userDTO;
+    const { password, full_name, email }: CreateUserDto = req.body;
 
     //check if email already exisit
     const userExists = await knex("users").where({ email }).first();
@@ -36,6 +38,6 @@ export const signUp = async (userDTO: CreateUserDto, res: Response) => {
 
     res.status(200).json({ status: true, msg: "User created successfully" });
   } catch (err: any) {
-    res.json({ status: false, msg: err.message });
+    res.status(500).json({ status: false, msg: err.message });
   }
 };
