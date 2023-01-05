@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 import signupRoute from "./routes/signupRoute";
 import authRoute from "./routes/authRoute";
-import paymentRoute from "./routes/paymentRoute";
+import walletRoute from "./routes/walletRoute";
 import cors from "cors";
 
 const app: Application = express();
@@ -18,7 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/", signupRoute);
 app.use("/", authRoute);
-app.use("/", paymentRoute);
+app.use("/", walletRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
