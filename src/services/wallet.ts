@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
 import { HttpException } from "../exceptions/HttpException";
+import dotenv from "dotenv";
+import path from "path";
+import axios from "axios";
+
+const knex = require("../db/knex");
+dotenv.config();
 
 //transfer fund from user balance to another user
 export async function transferFund(req: Request, res: Response) {
@@ -129,4 +135,112 @@ export async function transferFund(req: Request, res: Response) {
   return { status: true, msg: message };
 }
 
-//fund wallet using flutterwave
+//make payment via flutterwave
+
+export function makeWalletPayment(res: Response) {
+  const dir = __dirname.replace("services", "");
+  res.sendFile(path.join(dir + "/views/paymentUI.html"));
+}
+
+//after payment is successful, response to fund wallent of user
+export async function fundWalletResponse(req: Request, res: Response) {
+  try {
+    const { transaction_id } = req.query;
+    const url = `https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`;
+
+    const flutterwaveResponse = await axios({
+      url,
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `${process.env.FLUTTERWAVE_V3_SECRET_KEY}`,
+      },
+    });
+
+    //update wallet balance in user schema and wallet schema
+    const response = flutterwaveResponse.data.data;
+    const { amount } = response;
+    const {
+      customer: { email },
+    } = response;
+
+    const user = await knex("users").where("email", email);
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    await knex("users")
+      .where("email", email)
+      .update({
+        wallet_balance: amount + user[0]?.wallet_balance,
+      });
+
+    //update wallet
+
+    await knex("wallets")
+      .where("user_email", email)
+      .update({
+        amount: amount + user[0]?.wallet_balance,
+      });
+
+    //store record in transaction history
+    await knex("transactions_history").insert({
+      action: "fund wallet",
+      sender: email,
+      amount: amount,
+      receiver: null,
+    });
+
+    const dir = __dirname.replace("services", "");
+    res.sendFile(path.join(dir + "/views/successful.html"));
+  } catch (err: any) {
+    res.status(500).json({ status: false, msg: err.message });
+  }
+}
+
+//make request for withdrawer from wallet balance
+export async function withdrawFunds(req: Request, res: Response) {
+  try {
+    const { user_email, amount } = req.body;
+
+    const user_wallet = await knex("wallets").where({ user_email }).first();
+
+    if (!user_wallet) {
+      return res.status(404).json({ status: false, msg: "Wallet not found" });
+    }
+
+    //check if wallet balance is sufficient for the transaction
+    if (user_wallet.amount < amount) {
+      return res
+        .status(403)
+        .json({ status: false, msg: "Insuffient Wallet balance" });
+    }
+
+    //update wallet balance in user schema and wallet schema
+
+    await knex("users")
+      .where("email", user_email)
+      .update({
+        wallet_balance: user_wallet.amount - amount,
+      });
+
+    await knex("wallets")
+      .where("email", user_email)
+      .update({
+        amount: user_wallet.amount - amount,
+      });
+
+    //transaction history
+    await knex("transactions_history").insert({
+      action: "Withdraw funds",
+      sender: user_email,
+      amount: amount,
+    });
+
+    res.json({ status: true, msg: `Withdraw completed successfully` });
+  } catch (err: any) {
+    res.status(500).json({ status: false, msg: err.message });
+  }
+}

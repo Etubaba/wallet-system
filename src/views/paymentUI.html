@@ -36,8 +36,30 @@
         background-color: #f2f2f2;
         padding: 20px;
       }
+
+      button {
+        padding: 9px 14px 9px 14px;
+        background-color: #fb9129;
+        color: white;
+        font-weight: 600;
+        font-size: 13px;
+        border-radius: 6px;
+        margin-top: 10px;
+        border: none;
+      }
+      button:hover {
+        background-color: #fda348;
+        color: white;
+      }
+      p {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+      }
     </style>
   </head>
+
+  <p>Proceed to complete payment</p>
 
   <div>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
@@ -65,18 +87,23 @@
     function makePayment() {
       var email, phone, name, amount;
 
-      name = event.target["name"].value;
-      email = event.target["email"].value;
-      phone = event.target["phone"].value;
-      amount = event.target["amount"].value;
+      name = document.getElementById("name").value;
+      phone = document.getElementById("phone").value;
+      email = document.getElementById("email").value;
+      amount = document.getElementById("amount").value;
+
+      if (name === "" || phone === "" || email === "" || amount == "") {
+        alert("Please, All fields are required");
+        return;
+      }
 
       FlutterwaveCheckout({
-        public_key: "FLWPUBK_TEST-SANDBOXDEMOKEY-X",
-        tx_ref: "titanic-48981487343MDI0NzMx",
+        public_key: "FLWPUBK_TEST-256a236eb26976bfeca705425dda099b-X",
+        tx_ref: Date.now(),
         amount: amount,
         currency: "NGN",
         payment_options: "card, banktransfer, ussd",
-        redirect_url: "https://glaciers.titanic.com/handle-flutterwave-payment",
+        redirect_url: "http://localhost:8080/fund/wallet/response",
         meta: {
           consumer_id: 23,
           consumer_mac: "92a3-912ba-1192a",
@@ -85,6 +112,12 @@
           email: email,
           phone_number: phone,
           name: name,
+        },
+        callback: function (data) {
+          console.log(data);
+        },
+        onclose: function () {
+          // close modal
         },
         customizations: {
           title: "Lendsqr Test",
