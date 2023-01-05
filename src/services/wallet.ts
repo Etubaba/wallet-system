@@ -200,7 +200,6 @@ export async function fundWalletResponse(req: Request, res: Response) {
       action: "fund wallet",
       sender: email,
       amount: amount,
-      receiver: null,
     });
 
     const dir = __dirname.replace("services", "");
@@ -250,6 +249,28 @@ export async function withdrawFunds(req: Request, res: Response) {
     });
 
     res.json({ status: true, msg: `Withdraw completed successfully` });
+  } catch (err: any) {
+    res.status(500).json({ status: false, msg: err.message });
+  }
+}
+
+//wallet history of a user
+
+export async function userWalletHistory(req: Request, res: Response) {
+  try {
+    const { user_email } = req.body;
+
+    const user_history = await knex("transactions_history")
+      .where({ sender: user_email })
+      .orWhere({ receiver: user_email });
+
+    if (user_history.length === 0) {
+      return res.status(404).json({
+        status: false,
+        msg: "You do not have any transaction history",
+      });
+    }
+    res.json({ status: true, data: user_history });
   } catch (err: any) {
     res.status(500).json({ status: false, msg: err.message });
   }

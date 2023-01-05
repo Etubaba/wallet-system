@@ -4,6 +4,7 @@ import {
   fundWalletResponse,
   withdrawFunds,
   transferFund,
+  userWalletHistory,
 } from "../services/wallet";
 
 export const paymentController = (req: Request, res: Response) => {
@@ -18,4 +19,8 @@ export const withdrawFromWallet = (req: Request, res: Response) => {
 };
 export const transferFunds = (req: Request, res: Response) => {
   return transferFund(req, res);
+};
+
+export const getUserWalletHistory = (req: Request, res: Response) => {
+  return userWalletHistory(req, res);
 };
