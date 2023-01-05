@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 import { HttpException } from "../exceptions/HttpException";
 import * as argon2 from "argon2";
 import dotenv from "dotenv";
@@ -12,6 +12,8 @@ const knex = require("../db/knex");
 export const userAuth = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+
+    const jwt_secret: Secret = "super_secret";
 
     //check if user exist
     const user = await knex("users").where("email", email);
@@ -27,7 +29,7 @@ export const userAuth = async (req: Request, res: Response) => {
       throw new HttpException(406, `User credentials is incorrect`);
     }
     //Generate token
-    const token = jwt.sign({ email: user[0].email }, "super_secret", {
+    const token = jwt.sign({ email: user[0].email }, jwt_secret, {
       expiresIn: "1h",
     });
     //update user token
