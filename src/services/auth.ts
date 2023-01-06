@@ -33,7 +33,7 @@ export const userAuth = async (
     }
     //Generate token
     const token = jwt.sign({ email: user[0].email }, jwt_secret, {
-      expiresIn: "1h",
+      expiresIn: "15m",
     });
     //update user token
     await knex("users").where("email", email).update({ token });

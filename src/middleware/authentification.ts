@@ -13,8 +13,7 @@ export const jwtAuth = async (
   next: NextFunction
 ) => {
   try {
-    const token =
-      req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
+    const token = req.header("Authorization")?.replace("Bearer ", "");
     if (!token) {
       throw new Error();
     }
