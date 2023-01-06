@@ -7,7 +7,7 @@ const knex = require("../db/knex");
 
 import * as argon2 from "argon2";
 
-export const signUp = async (req: Request, res: Response) => {
+export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
     const { password, full_name, email }: CreateUserDto = req.body;
 

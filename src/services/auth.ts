@@ -9,7 +9,10 @@ dotenv.config();
 
 const knex = require("../db/knex");
 
-export const userAuth = async (req: Request, res: Response) => {
+export const userAuth = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
     const { email, password } = req.body;
 

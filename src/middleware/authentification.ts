@@ -1,6 +1,9 @@
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { CustomRequest } from "../interfaces";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const SECRET_KEY: Secret = "super_secret";
 
@@ -10,7 +13,8 @@ export const jwtAuth = async (
   next: NextFunction
 ) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
+    const token =
+      req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
     if (!token) {
       throw new Error();
     }
