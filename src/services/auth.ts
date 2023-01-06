@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 import { HttpException } from "../exceptions/HttpException";
+
 import * as argon2 from "argon2";
 import dotenv from "dotenv";
 import { userData } from "../interfaces";
@@ -21,7 +22,7 @@ export const userAuth = async (
     //check if user exist
     const user = await knex("users").where("email", email);
 
-    if (!user) {
+    if (user.length === 0) {
       throw new HttpException(404, `User with email: ${email} does not exist`);
     }
 
@@ -29,7 +30,7 @@ export const userAuth = async (
     const isPasswordCorrect = await argon2.verify(user[0]?.password, password);
 
     if (!isPasswordCorrect) {
-      throw new HttpException(406, `User credentials is incorrect`);
+      throw new HttpException(401, `Incorrect user credentials`);
     }
     //Generate token
     const token = jwt.sign({ email: user[0].email }, jwt_secret, {

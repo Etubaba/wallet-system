@@ -5,7 +5,7 @@ import authRoute from "./routes/authRoute";
 import walletRoute from "./routes/walletRoute";
 import cors from "cors";
 
-const app: Application = express();
+export const app: Application = express();
 const port = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: false }));
