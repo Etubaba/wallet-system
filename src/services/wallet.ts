@@ -3,7 +3,8 @@ import { HttpException } from "../exceptions/HttpException";
 import dotenv from "dotenv";
 import path from "path";
 import axios from "axios";
-// import knex from "../db/knex";
+// import { knex } from "../db/knex";
+
 const knex = require("../db/knex");
 
 dotenv.config();

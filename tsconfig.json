@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es2016",
     /* Modules */
-    "module": "CommonJS",
+    // "module": "ES6",
+     "module": "CommonJS",
     "rootDir": "./src",
     "moduleResolution": "node",
     "outDir": "./dist",

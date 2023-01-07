@@ -5,9 +5,9 @@ import { HttpException } from "../exceptions/HttpException";
 import * as argon2 from "argon2";
 import dotenv from "dotenv";
 import { userData } from "../interfaces";
+// import { knex } from "../db/knex";
 
 dotenv.config();
-
 const knex = require("../db/knex");
 
 export const userAuth = async (
