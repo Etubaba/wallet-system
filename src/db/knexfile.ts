@@ -8,11 +8,11 @@ module.exports = {
   production: {
     client: "mysql2",
     connection: {
-      host: "containers-us-west-100.railway.app",
-      port: 5591,
+      host: "containers-us-west-34.railway.app",
+      port: 6537,
       database: "railway",
       user: "root",
-      password: "ikPjB7bhCCuRg8zEtGTD",
+      password: "96C3igw0PcNO2IoI24U1",
     },
     // pool: {
     //   min: 2,
