@@ -86,7 +86,7 @@ The REST API to the this app is described below.
 
 `GET /make/payment`
 
-    curl -i -H 'Accept: application/json' -d 'user_email=koko@gmail&amount=4000' http://localhost:8080/make/payment
+    curl -i -H authorization:token 'Accept: application/json' -d 'user_email=koko@gmail&amount=4000' http://localhost:8080/make/payment
 
 ### Response
 
@@ -96,100 +96,13 @@ The REST API to the this app is described below.
     Connection: close
     Content-Type: HTML page
 
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Receive Payment</title>
-    <style>
-      input[type="text"],
-      select {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-
-      input[type="submit"] {
-        width: 100%;
-        background-color: #4caf50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      input[type="submit"]:hover {
-        background-color: #45a049;
-      }
-
-      div {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        padding: 20px;
-      }
-
-      button {
-        padding: 9px 14px 9px 14px;
-        background-color: #fb9129;
-        color: white;
-        font-weight: 600;
-        font-size: 13px;
-        border-radius: 6px;
-        margin-top: 10px;
-        border: none;
-      }
-      button:hover {
-        background-color: #fda348;
-        color: white;
-      }
-      p {
-        font-size: 20px;
-        font-weight: 600;
-        text-align: center;
-      }
-    </style>
-
-  </head>
-
-  <p>Proceed to complete payment</p>
-
-  <div>
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <form>
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name.." />
-      <label for="email">Email</label>
-      <input type="text" id="email" name="email" placeholder="Your email.." />
-      <label for="phone">Phone</label>
-      <input type="text" id="phone" name="phone" placeholder="Your number.." />
-      <label for="amount">Amount</label>
-      <input
-        type="text"
-        id="amount"
-        name="amount"
-        placeholder="Enter amount.."
-      />
-      <button type="button" id="start-payment-button" onclick="makePayment()">
-        Pay Now
-      </button>
-    </form>
-  </div>
-
-</html>
-
 ## Transfer Fund
 
 ### Request
 
 `Post /transfer/funds`
 
-    curl -i -H 'Accept: application/json' -d 'sender_email=Foo@gmail.com&receiver=new@gmail.com&amount=200' http://localhost:8080/transfer/fund
+    curl -i -H 'Accept: application/json' authorization:token -d 'sender_email=Foo@gmail.com&receiver=new@gmail.com&amount=200' http://localhost:8080/transfer/fund
 
 ### Response
 
@@ -211,7 +124,7 @@ The REST API to the this app is described below.
 
 `POST /wallet/witdrawer`
 
-    curl -i -H 'Accept: application/json' -d 'user_email=Bar@gmail.com&amount=400' http://localhost:8080/withdrawer/funds
+    curl -i -H authorization:token 'Accept: application/json' -d 'user_email=Bar@gmail.com&amount=400' http://localhost:8080/withdrawer/funds
 
 ### Response
 
