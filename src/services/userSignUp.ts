@@ -17,7 +17,7 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
     if (userExists)
       throw new HttpException(
         400,
-        `This email ${email} already in use,please make uuse of another.`
+        `This email ${email} already in use,please make use of another.`
       );
 
     //hash password

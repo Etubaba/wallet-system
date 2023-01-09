@@ -18,11 +18,11 @@ module.exports = {
     //   min: 2,
     //   max: 10,
     // },
-    // migrations: {
-    //   directory: "./src/db/migrations",
-    //   tableName: "migrations",
-    //   // stub: 'src/databases/stubs',
-    // },
+    migrations: {
+      directory: "./src/db/migrations",
+      tableName: "migrations",
+      // stub: 'src/databases/stubs',
+    },
   },
 
   development: {
