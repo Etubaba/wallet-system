@@ -35,12 +35,12 @@ module.exports = {
       database: "lendsqr",
     },
     migrations: {
-      directory: "src/db/migrations",
+      directory: "/migrations",
       tableName: "migrations",
       // stub: 'src/databases/stubs',
     },
     seeds: {
-      directory: "src/db/seeds",
+      directory: "/seeds",
       // stub: 'src/databases/stubs',
     },
   },
