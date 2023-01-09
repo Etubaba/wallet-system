@@ -18,9 +18,11 @@ module.exports = {
     //   min: 2,
     //   max: 10,
     // },
-    migrations: {
-      tableName: "knex_migrations",
-    },
+    // migrations: {
+    //   directory: "./src/db/migrations",
+    //   tableName: "migrations",
+    //   // stub: 'src/databases/stubs',
+    // },
   },
 
   development: {
@@ -34,11 +36,11 @@ module.exports = {
 
       database: "lendsqr",
     },
-    migrations: {
-      directory: "./src/db/migrations",
-      tableName: "migrations",
-      // stub: 'src/databases/stubs',
-    },
+    // migrations: {
+    //   directory: "./src/db/migrations",
+    //   tableName: "migrations",
+    //   // stub: 'src/databases/stubs',
+    // },
     seeds: {
       directory: "/seeds",
       // stub: 'src/databases/stubs',
