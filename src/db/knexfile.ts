@@ -35,7 +35,7 @@ module.exports = {
       database: "lendsqr",
     },
     migrations: {
-      directory: "/migrations",
+      directory: "./src/db/migrations",
       tableName: "migrations",
       // stub: 'src/databases/stubs',
     },
