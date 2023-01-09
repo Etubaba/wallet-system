@@ -8,7 +8,7 @@ import { knex } from "../../db/knex";
 
 vi.mock("../../db/knex");
 
-const req = {
+const req: Partial<Request> = {
   body: {
     email: "test",
     password: "12345",
