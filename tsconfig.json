@@ -15,7 +15,10 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.json", ".env", "knexfile.ts"],
+ "filesGlob": [
+    "**/*.ts", //Local source, this is the default
+    "../generated/**/*.ts" //generated source
+], //Add as many directories to the above list as needed
   "exclude": ["node_modules", "src/http", "src/logs", "src/tests"]
 }
 
