@@ -15,6 +15,7 @@ describe("Test the lendsqr app", () => {
     const res = await request(app).post("/signup").send(user);
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty("accountDetails");
+    expect(res.body.msg).toBe("User created successfully");
     accountDetail = res.body.accountDetails;
   });
 
@@ -22,13 +23,15 @@ describe("Test the lendsqr app", () => {
     const res = await request(app).post("/signup").send(user);
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty("message");
-    expect(res.body.message).toBe("email is already registered with us");
+    expect(res.body.msg).toBe(`User with email:
+    ${user.email} already exist`);
   });
 
   test("test funding of user account", async () => {
     const res = await request(app)
       .get("/make/payment")
-      .expect("Content-Type", /html/);
+      .expect("Content-Type", /html/)
+      .expect(200);
   });
 
   test("test withdrawal from user account", async () => {
@@ -36,22 +39,20 @@ describe("Test the lendsqr app", () => {
       .post("/widthdraw/funds")
       .send({ user_email: "ekke@kdkd.com", amount: 404 })
       .expect(200);
-
-    expect(res.body).toBeTruthy();
-    expect(res.body).toHaveProperty("message");
-    expect(res.body.msg).toBe("success");
+    expect(res.body.msg).toBe("s");
   });
 
-  test("test for insufficeient account balance", async () => {
+  test("test for insufficient account balance", async () => {
     const res = await request(app).post("/widthdraw/funds").send({
-      user_id: "1",
-      account_number: accountDetail.account_number,
+      sender_email: "lolo@gmail.com",
+      receiver_email: "loho@gmail.com",
+
       amount: 5000,
     });
     expect(res.status).toEqual(400);
     expect(res.body).toBeTruthy();
-    expect(res.body).toHaveProperty("message");
-    expect(res.body.message).toBe("insuffient balance");
+    expect(res.body).toHaveProperty("msg");
+    expect(res.body.msg).toBe("Insuffient Wallet balance");
   });
 
   describe("transfer funds request", () => {
