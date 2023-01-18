@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "postbuild": "cpy ./src/views/ ./dist/views/"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "axios": "^1.2.2",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
+    "cpy-cli": "^4.2.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
