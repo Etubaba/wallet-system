@@ -10,7 +10,7 @@ import { jwtAuth } from "../middleware/authentification";
 
 const router: Router = express.Router();
 
-router.get("/make/payment", jwtAuth, paymentController);
+router.get("/make/payment", paymentController);
 router.get("/fund/wallet/response", fundWallet);
 router.post("/withdraw/funds", jwtAuth, withdrawFromWallet);
 router.post("/transfer/funds", jwtAuth, transferFunds);
