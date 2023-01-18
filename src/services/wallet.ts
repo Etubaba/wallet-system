@@ -150,8 +150,8 @@ export async function transferFund(req: Request, res: Response) {
 
 export function makeWalletPayment(res: Response) {
   try {
-    // const dir = __dirname.replace("services", "");
-    res.sendFile(path.join(__dirname + "/views/paymentUI.html"));
+    const dir = __dirname.replace("services", "");
+    res.sendFile(path.join(dir + "/views/paymentUI.html"));
   } catch (err: any) {
     res.status(500).json({ message: err.message });
   }
