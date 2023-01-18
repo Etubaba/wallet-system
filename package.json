@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/main.ts",
-    "build": "tsc",
+    "dev": "  ts-node-dev src/main.ts",
+    "build": "npm run clean && npx tsc",
+    "clean":"rimraf dist/",
     "start": "node dist/main.js",
-    "postbuild": "cpy ./src/views/ ./dist/views/"
+    "copy-files":"copyfiles -u 1 src/**/*.html dist/",
+    "postbuild": "npm run copy-files"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +25,8 @@
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.3.0",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "rimraf": "^4.1.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
