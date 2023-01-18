@@ -149,8 +149,12 @@ export async function transferFund(req: Request, res: Response) {
 //make payment via flutterwave
 
 export function makeWalletPayment(res: Response) {
-  const dir = __dirname.replace("services", "");
-  res.sendFile(path.join(dir + "/views/paymentUI.html"));
+  try {
+    const dir = __dirname.replace("services", "");
+    res.sendFile(path.join(dir + "/views/paymentUI.html"));
+  } catch (err: any) {
+    res.status(500).json({ message: err.message });
+  }
 }
 
 //after payment is successful, response to fund wallent of user
