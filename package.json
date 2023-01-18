@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "  ts-node-dev src/main.ts",
-    "build": "npm run clean && npx tsc",
-    "clean":"rimraf dist/",
+    "dev": "ts-node-dev src/main.ts",
+    "build": "tsc",
     "start": "node dist/main.js",
     "copy-files":"copyfiles -u 1 src/**/*.html dist/",
     "postbuild": "npm run copy-files"
