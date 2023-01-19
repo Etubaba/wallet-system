@@ -151,7 +151,7 @@ export async function transferFund(req: Request, res: Response) {
 export function makeWalletPayment(res: Response) {
   try {
     const dir = __dirname.replace("services", "");
-    res.sendFile(path.join(dir + "/views/paymentUI.html"));
+    res.sendFile(path.join(dir + "/views/src/views/paymentUI.html"));
   } catch (err: any) {
     res.status(500).json({ message: err.message });
   }
@@ -208,7 +208,7 @@ export async function fundWalletResponse(req: Request, res: Response) {
     });
 
     const dir = __dirname.replace("services", "");
-    res.sendFile(path.join(dir + "/views/successful.html"));
+    res.sendFile(path.join(dir + "/views/src/views/successful.html"));
   } catch (err: any) {
     res.status(500).json({ status: false, msg: err.message });
   }
